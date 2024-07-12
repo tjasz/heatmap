@@ -15,9 +15,9 @@
       The strava heatmap is an excellent tool for planning routes both in the city and the woods.
       By showing how frequently a certain trail or road segment is used by people running or hiking,
       you can get some idea of how easy it is to travel.
-      However, on <a href="strava.com/maps" target="_blank">Strava's own website</a>, the heatmap can only be laid over
-      a handful of Mapbox map layers.
-      Tools like <a href="caltopo.com/map.html" target="_blank">CalTopo</a>,
+      However, on <a href="https://www.strava.com/maps" target="_blank">Strava's own website</a>,
+      the heatmap can only be laid over a handful of Mapbox map layers.
+      Tools like <a href="https://caltopo.com/map.html" target="_blank">CalTopo</a>,
       on the other hand allow you to layer many different maps from many different sources.
       In this guide, you will learn how to add a custom layer to CalTopo to show the strava heatmap.
     </p>
@@ -25,7 +25,12 @@
       <em>
         Note: adding custom layer sources is now a Pro feature of CalTopo,
         so you will need a paid account.
+        You will also get better maps with a paid Strava account, but you can get some heatmaps without one.
       </em>
+    </p>
+    <a href="img/tahoma.png" target="_blank"><img src="img/tahoma.png" /></a>
+    <p class="caption">
+      The strava heatmap for on-foot activities overlaid on top of CalTopo's MapBuilder map.
     </p>
     <h2>Building the URL Template</h2>
     <p>
@@ -46,80 +51,80 @@
       The following sports can be used:
     </p>
     <ul>
-      <li><strong>all</strong>: all activities</li>
+      <li><code>all</code>: all activities</li>
       <li>
-        <strong>run</strong>:
+        <code>run</code>:
         all foot sport activities (Run, Trail Run, Walk, Hike).
         The name is misleading for historical reasons.
         <ul>
-          <li><strong>sport_Run</strong>: just "Run" activities</li>
-          <li><strong>sport_TrailRun</strong>: just "Trail Run" activities</li>
-          <li><strong>sport_Walk</strong></li>
-          <li><strong>sport_Hike</strong></li>
+          <li><code>sport_Run</code>: just "Run" activities</li>
+          <li><code>sport_TrailRun</code>: just "Trail Run" activities</li>
+          <li><code>sport_Walk</code></li>
+          <li><code>sport_Hike</code></li>
         </ul>
       </li>
       <li>
-        <strong>ride</strong>:
+        <code>ride</code>:
         all cycle activities (those listed below)
         <ul>
-          <li><strong>sport_Ride</strong></li>
-          <li><strong>sport_MountainBikeRide</strong></li>
-          <li><strong>sport_GravelRide</strong></li>
-          <li><strong>sport_EBikeRide</strong></li>
-          <li><strong>sport_EMountainBikeRide</strong></li>
-          <li><strong>sport_Velomobile</strong></li>
+          <li><code>sport_Ride</code></li>
+          <li><code>sport_MountainBikeRide</code></li>
+          <li><code>sport_GravelRide</code></li>
+          <li><code>sport_EBikeRide</code></li>
+          <li><code>sport_EMountainBikeRide</code></li>
+          <li><code>sport_Velomobile</code></li>
         </ul>
       </li>
       <li>
-        <strong>water</strong>:
+        <code>water</code>:
         all water activities (those listed below)
         <ul>
-          <li><strong>sport_Canoeing</strong></li>
-          <li><strong>sport_Kayaking</strong></li>
-          <li><strong>sport_Kitesurf</strong></li>
-          <li><strong>sport_Rowing</strong></li>
-          <li><strong>sport_Sail</strong></li>
-          <li><strong>sport_StandUpPaddling</strong></li>
-          <li><strong>sport_Surfing</strong></li>
-          <li><strong>sport_Swim</strong></li>
-          <li><strong>sport_Windsurf</strong></li>
+          <li><code>sport_Canoeing</code></li>
+          <li><code>sport_Kayaking</code></li>
+          <li><code>sport_Kitesurf</code></li>
+          <li><code>sport_Rowing</code></li>
+          <li><code>sport_Sail</code></li>
+          <li><code>sport_StandUpPaddling</code></li>
+          <li><code>sport_Surfing</code></li>
+          <li><code>sport_Swim</code></li>
+          <li><code>sport_Windsurf</code></li>
         </ul>
       </li>
       <li>
-        <strong>winter</strong>:
+        <code>winter</code>:
         all winter activities (those listed below)
         <ul>
-          <li><strong>sport_AlpineSki</strong></li>
-          <li><strong>sport_BackcountrySki</strong></li>
-          <li><strong>sport_IceSkate</strong></li>
-          <li><strong>sport_NordicSki</strong></li>
-          <li><strong>sport_Snowboard</strong></li>
-          <li><strong>sport_Snowshoe</strong></li>
+          <li><code>sport_AlpineSki</code></li>
+          <li><code>sport_BackcountrySki</code></li>
+          <li><code>sport_IceSkate</code></li>
+          <li><code>sport_NordicSki</code></li>
+          <li><code>sport_Snowboard</code></li>
+          <li><code>sport_Snowshoe</code></li>
         </ul>
       </li>
-      <li><strong>sport_Badminton</strong></li>
-      <li><strong>sport_Golf</strong></li>
-      <li><strong>sport_Handcycle</strong></li>
-      <li><strong>sport_InlineSkate</strong></li>
-      <li><strong>sport_Pickleball</strong></li>
-      <li><strong>sport_RockClimbing</strong></li>
-      <li><strong>sport_RollerSki</strong></li>
-      <li><strong>sport_Skateboard</strong></li>
-      <li><strong>sport_Soccer</strong></li>
-      <li><strong>sport_Tennis</strong></li>
-      <li><strong>sport_Wheelchair</strong></li>
+      <li><code>sport_Badminton</code></li>
+      <li><code>sport_Golf</code></li>
+      <li><code>sport_Handcycle</code></li>
+      <li><code>sport_InlineSkate</code></li>
+      <li><code>sport_Pickleball</code></li>
+      <li><code>sport_RockClimbing</code></li>
+      <li><code>sport_RollerSki</code></li>
+      <li><code>sport_Skateboard</code></li>
+      <li><code>sport_Soccer</code></li>
+      <li><code>sport_Tennis</code></li>
+      <li><code>sport_Wheelchair</code></li>
     </ul>
     <h3>Changing the color</h3>
     <p>
       Strava heatmap comes in 6 different color styles.
-      Replace the <code>color</code> part of the URL template to change styles.
+      Replace the <code>hot</code> part of the URL template to change styles.
     <ul>
-      <li>mobileblue</li>
-      <li>gray</li>
-      <li>bluered</li>
-      <li>hot</li>
-      <li>purple</li>
-      <li>orange</li>
+      <li><code>mobileblue</code></li>
+      <li><code>gray</code></li>
+      <li><code>bluered</code></li>
+      <li><code>hot</code></li>
+      <li><code>purple</code></li>
+      <li><code>orange</code></li>
     </ul>
     </p>
     <h3>Putting it all together</h3>
@@ -139,17 +144,69 @@
         https://heatmap-external-a.strava.com/tiles/water/purple/{Z}/{X}/{Y}.png
       </code>
     </p>
+    <h3>Getting a better resolution heatmap with a Strava paid account</h3>
+    <p>
+      Without a paid account, Strava only allows the heatmap to be used up to zoom level 12.
+      If you don't have a Strava pro account, then the layer you will get at the end of this guide
+      will disappear from your CalTopo map whenever you zoom in beyond level 12
+      (about the level that makes the city of Seattle fill a computer screen).
+      If you do have a pro account, follow the instructions below to configure a better resolution heatmap
+      that you can use down to level 15 (about the level that makes Green Lake fill a computer screen).
+    </p>
+    <p>
+      Warning: things are about to get complicated.
+      The instructions below are written for Google Chrome, and probably translate well to Microsoft Edge.
+      If you use Firefox, Safari, or something else, you may have to make some adjustments,
+      but the basic process is the same.
+    </p>
+    </p>
+    <ol>
+      <li>In your URL template, change <code>tiles</code> to <code>tiles-auth</code>.</li>
+      <li>Go to <a href="https://www.strava.com/maps">strava.com/maps</a>.</li>
+      <li>Open your browser's developer tools (such as by hitting your F12 key).</li>
+      <li>
+        Navigate to the "Application" tab (it might be hidden under a "More" arrow).
+        <a href="img/devtools.png" target="_blank"><img src="img/devtools.png" /></a>
+      </li>
+      <li>From here, under "Storage", find the "Cookies" for "https://www.strava.com".</li>
+      <li>
+        The cookies we are interested in are the three whose names start with "CloudFront":
+        <a href="img/cookies.png" target="_blank"><img src="img/cookies.png" /></a>
+      </li>
+      <li>
+        Append the following to your URL template:
+        <p class="blockquote">
+          <code>
+            ?KeyPairId=...&Policy=...&Signature=...
+          </code>
+        </p>
+      </li>
+      <li>
+        Replace the first <code>...</code> above with the value of the <code>CloudFront-Key-Pair-Id</code> cookie.
+        You can copy this value by clicking on the table row corresponding to the cookie and
+        selecting the text in the "Cookie Value" pane below the table.
+        <a href="img/cookievalue.png" target="_blank"><img src="img/cookievalue.png" /></a>
+      </li>
+      <li>Replace the second <code>...</code> with the value of the <code>CloudFront-Policy</code> cookie.</li>
+      <li>Replace the third <code>...</code> with the value of the <code>CloudFront-Signature</code> cookie.</li>
+    </ol>
+    <p>
+      <em>
+        Note: your <code>CloudFront-Signature</code> changes weekly, so you will have to repeat the last step
+        if your map stops working.
+      </em>
+    </p>
     <h2>Defining the layer in CalTopo</h2>
     <p>
       Now that you have your URL template, you can define the layer in CalTopo.
       From the "Add" menu, select "Custom Source".
     </p>
-    <img src="img/customsource.png" />
+    <a href="img/customsource.png" target="_blank"><img src="img/customsource.png" /></a>
     <p>
       In the form dialog that pops up, leave the "Type" as "Tile".
       Give the layer a name to identify it in the "Name" field.
       Paste your URL template into the box labeled "URL Template".
-      Set "Max Zoom" to 12.
+      Set "Max Zoom" to 12 (or 15 if you followed the steps above for Strava paid accounts).
     </p>
     <p>
       Set "Overlay?" based on whether you want to define an overlay or a base layer.
@@ -157,7 +214,7 @@
       If you'd rather have the transparency locked in but be able to easily toggle the layer with a checkbox, choose
       "Yes".
     </p>
-    <img src="img/dialog.png" />
+    <a href="img/dialog.png" target="_blank"><img src="img/dialog.png" /></a>
     <p>
       The right half of the form can be left blank. Click "Save". Your layer will be added to your map.
       I chose a purple heatmap of water sport activities.
@@ -165,17 +222,11 @@
       as well as Lakes Washington, Sammamish, Union and Green Lake are covered.
       Particular hot spots show up around downtown Kirkland, Marymoor Park, Golden Gardens, and other popular locations.
     </p>
-    <img src="img/map.png" />
-    <p>
-      <em>
-        Note: Strava only allows access to the heat map up to zoom level 12.
-        You will see the layer disappear if you zoom in beyond this.
-      </em>
-    </p>
+    <a href="img/map.png" target="_blank"><img src="img/map.png" /></a>
   </main>
   <footer>
     <p>
-      &copy; 2024 Tyler Jaszkowiak
+      Text &copy; 2024 Tyler Jaszkowiak
     </p>
   </footer>
 </body>
