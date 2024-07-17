@@ -15,6 +15,12 @@ main {
 .blockquote {
   margin: 0 auto;
   max-width: 7in;
+  overflow-x: auto;
+}
+
+form {
+  margin: 1em auto;
+  max-width: 7in;
 }
 
 img {
@@ -32,4 +38,18 @@ img {
 
 code {
   background-color: #ddd;
+}
+
+textarea {
+  resize: both;
+  display: block;
+  width: 100%;
+}
+
+#urltemplate {
+  display: block;
+  float: left;
+  overflow-x: auto;
+  max-width: calc(100% - 1in - 10px);
+  margin-right: 10px;
 }

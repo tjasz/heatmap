@@ -3,6 +3,7 @@
 <head>
   <title>Using Strava heatmap in CalTopo</title>
   <link rel="stylesheet" href="style.css">
+  <script src="script.js"></script>
 </head>
 
 <body>
@@ -44,11 +45,92 @@
         https://heatmap-external-a.strava.com/tiles/all/hot/{Z}/{X}/{Y}.png
       </code>
     </p>
-    <h3>Changing the sports</h3>
+    <p>
+      Later subsections explain how to build the URL template manually and what each parameter means/does.
+      This form can be used to generate the template automatically.
+    </p>
+    <form>
+      <label for="activities">Activities</label>
+      <select id="activities" name="activities" onChange="updateUrlTemplate()">
+        <option value="all" selected="selected">All</option>
+        <optgroup label="Foot activities">
+          <option value="run">All foot activities</option>
+          <option value="sport_Run">Run</option>
+          <option value="sport_TrailRun">Trail Run</option>
+          <option value="sport_Walk">Walk</option>
+          <option value="sport_Hike">Hike</option>
+        </optgroup>
+        <optgroup label="Cycling activities">
+          <option value="ride">All cycling activities</option>
+          <option value="sport_Ride">Ride</option>
+          <option value="sport_MountainBikeRide">Mountain Bike Ride</option>
+          <option value="sport_GravelRide">Gravel Ride</option>
+          <option value="sport_EBikeRide">E-Bike Ride</option>
+          <option value="sport_EMountainBikeRide">E-Mountain Bike Ride</option>
+          <option value="sport_Velomobile">Velomobile</option>
+        </optgroup>
+        <optgroup label="Water activities">
+          <option value="water">All water activities</option>
+          <option value="sport_Canoeing">Canoeing</option>
+          <option value="sport_Kayaking">Kayaking</option>
+          <option value="sport_Kitesurf">Kitesurf</option>
+          <option value="sport_Rowing">Rowing</option>
+          <option value="sport_Sail">Sail</option>
+          <option value="sport_StandUpPaddling">Stand Up Paddling</option>
+          <option value="sport_Surfing">Surfing</option>
+          <option value="sport_Swim">Swim</option>
+          <option value="sport_Windsurf">Windsurf</option>
+        </optgroup>
+        <optgroup label="Winter activities">
+          <option value="winter">All winter activities</option>
+          <option value="sport_AlpineSki">Alpine Ski</option>
+          <option value="sport_BackcountrySki">Backcountry Ski</option>
+          <option value="sport_IceSkate">Ice Skate</option>
+          <option value="sport_NordicSki">Nordic Ski</option>
+          <option value="sport_Snowboard">Snowboard</option>
+          <option value="sport_Snowshoe">Snowshoe</option>
+        </optgroup>
+        <option value="sport_Badminton">Badminton</option>
+        <option value="sport_Golf">Golf</option>
+        <option value="sport_Handcycle">Handcycle</option>
+        <option value="sport_InlineSkate">Inline Skate</option>
+        <option value="sport_Pickleball">Pickleball</option>
+        <option value="sport_RockClimbing">Rock Climbing</option>
+        <option value="sport_RollerSki">Roller Ski</option>
+        <option value="sport_Skateboard">Skateboard</option>
+        <option value="sport_Soccer">Soccer</option>
+        <option value="sport_Tennis">Tennis</option>
+        <option value="sport_Wheelchair">Wheelchair</option>
+      </select>
+      <br />
+      <label for="color">Color</label>
+      <select id="color" name="color" onChange="updateUrlTemplate()">
+        <option value="mobileblue">mobileblue</option>
+        <option value="gray">gray</option>
+        <option value="bluered">bluered</option>
+        <option value="hot" selected="selected">hot</option>
+        <option value="purple">purple</option>
+        <option value="orange">orange</option>
+      </select>
+      <br />
+      <label for="key-pair-id">Key-Pair-Id</label>
+      <input type="text" id="key-pair-id" name="key-pair-id" onChange="updateUrlTemplate()" size="25" />
+      <br />
+      <label for="policy">Policy</label>
+      <textarea type="text" id="policy" name="policy" onChange="updateUrlTemplate()"></textarea>
+      <br />
+      <label for="signature">Signature</label>
+      <textarea type="text" id="signature" name="signature" onChange="updateUrlTemplate()"></textarea>
+    </form>
+    <p class="blockquote">
+      <code id="urltemplate">https://heatmap-external-a.strava.com/tiles/all/hot/{Z}/{X}/{Y}.png</code>
+      <button onClick="copyUrlTemplate()">Copy</button>
+    </p>
+    <h3>Changing the activities</h3>
     <p>
       By replacing the <code>all</code> part of the URL template shown above,
       you can limit the set of activities that are considered when building the heatmap.
-      The following sports can be used:
+      The following activity options can be used:
     </p>
     <ul>
       <li><code>all</code>: all activities</li>
@@ -177,7 +259,7 @@
         Append the following to your URL template:
         <p class="blockquote">
           <code>
-            ?KeyPairId=...&Policy=...&Signature=...
+            ?Key-Pair-Id=...&Policy=...&Signature=...
           </code>
         </p>
       </li>
