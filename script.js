@@ -7,12 +7,36 @@ function initMap() {
   var map = L.map('map').setView([46.85288, -121.76042], 10);
   L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
-    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    attribution: 'Base map &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
   }).addTo(map);
-  L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    maxZoom: 19,
-    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-  }).addTo(map);
+  window["map"] = map;
+  updateMap();
+}
+
+function updateMap() {
+  window["heatmap"]?.remove();
+
+  const activities = document.getElementById("activities").value;
+  const color = document.getElementById("color").value;
+  const keyPairId = document.getElementById("key-pair-id").value.trim();
+  const policy = document.getElementById("policy").value.trim();
+  const signature = document.getElementById("signature").value.trim();
+  if (keyPairId?.length && policy?.length && signature?.length) {
+    window["heatmap"] = L.tileLayer(`https://heatmap-external-a.strava.com/tiles-auth/{activities}/{color}/{z}/{x}/{y}.png?Key-Pair-Id=${keyPairId}&Policy=${policy}&Signature=${signature}`, {
+      activities,
+      color,
+      maxNativeZoom: 15,
+      attribution: 'Heatmap &copy; <a href="https://www.strava.com/maps">Strava</a>'
+    }).addTo(window["map"])
+  }
+  else {
+    window["heatmap"] = L.tileLayer('https://heatmap-external-a.strava.com/tiles/{activities}/{color}/{z}/{x}/{y}.png', {
+      activities,
+      color,
+      maxNativeZoom: 11,
+      attribution: 'Heatmap &copy; <a href="https://www.strava.com/maps">Strava</a>'
+    }).addTo(window["map"])
+  }
 }
 
 function initForm() {
@@ -51,6 +75,7 @@ function setCookieAndUpdateUrlTemplate(cname, exdays) {
   let expires = "expires=" + d.toUTCString();
   document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
   updateUrlTemplate();
+  updateMap();
 }
 
 function getCookie(cname) {
