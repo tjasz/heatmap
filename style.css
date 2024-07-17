@@ -53,3 +53,9 @@ textarea {
   max-width: calc(100% - 1in - 10px);
   margin-right: 10px;
 }
+
+#map {
+  max-width: 6in;
+  margin: 1em auto;
+  height: 400px;
+}

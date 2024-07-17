@@ -1,3 +1,20 @@
+function init() {
+  initForm();
+  initMap();
+}
+
+function initMap() {
+  var map = L.map('map').setView([46.85288, -121.76042], 10);
+  L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+  }).addTo(map);
+  L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+  }).addTo(map);
+}
+
 function initForm() {
   document.getElementById("activities").value = getCookie("activities") ?? "all";
   document.getElementById("color").value = getCookie("color") ?? "hot";

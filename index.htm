@@ -4,9 +4,15 @@
   <title>Using Strava heatmap in CalTopo</title>
   <link rel="stylesheet" href="style.css">
   <script src="script.js"></script>
+
+  <!-- Leaflet -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 </head>
 
-<body onload="initForm()">
+<body onload="init()">
   <header>
     <h1>Using Strava heatmap in CalTopo</h1>
   </header>
@@ -128,6 +134,7 @@
       <code id="urltemplate">https://heatmap-external-a.strava.com/tiles/all/hot/{Z}/{X}/{Y}.png</code>
       <button onClick="copyUrlTemplate()">Copy</button>
     </p>
+    <div id="map"></div>
     <h3>Changing the activities</h3>
     <p>
       By replacing the <code>all</code> part of the URL template shown above,
