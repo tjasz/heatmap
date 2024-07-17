@@ -6,7 +6,7 @@
   <script src="script.js"></script>
 </head>
 
-<body>
+<body onload="initForm()">
   <header>
     <h1>Using Strava heatmap in CalTopo</h1>
   </header>
@@ -51,7 +51,7 @@
     </p>
     <form>
       <label for="activities">Activities</label>
-      <select id="activities" name="activities" onChange="updateUrlTemplate()">
+      <select id="activities" name="activities" onChange="setCookieAndUpdateUrlTemplate('activities', 365)">
         <option value="all" selected="selected">All</option>
         <optgroup label="Foot activities">
           <option value="run">All foot activities</option>
@@ -104,7 +104,7 @@
       </select>
       <br />
       <label for="color">Color</label>
-      <select id="color" name="color" onChange="updateUrlTemplate()">
+      <select id="color" name="color" onChange="setCookieAndUpdateUrlTemplate('color', 365)">
         <option value="mobileblue">mobileblue</option>
         <option value="gray">gray</option>
         <option value="bluered">bluered</option>
@@ -114,13 +114,15 @@
       </select>
       <br />
       <label for="key-pair-id">Key-Pair-Id</label>
-      <input type="text" id="key-pair-id" name="key-pair-id" onChange="updateUrlTemplate()" size="25" />
+      <input type="text" id="key-pair-id" name="key-pair-id" onChange="setCookieAndUpdateUrlTemplate('key-pair-id', 7)"
+        size="25" />
       <br />
       <label for="policy">Policy</label>
-      <textarea type="text" id="policy" name="policy" onChange="updateUrlTemplate()"></textarea>
+      <textarea type="text" id="policy" name="policy" onChange="setCookieAndUpdateUrlTemplate('policy', 7)"></textarea>
       <br />
       <label for="signature">Signature</label>
-      <textarea type="text" id="signature" name="signature" onChange="updateUrlTemplate()"></textarea>
+      <textarea type="text" id="signature" name="signature"
+        onChange="setCookieAndUpdateUrlTemplate('signature', 7)"></textarea>
     </form>
     <p class="blockquote">
       <code id="urltemplate">https://heatmap-external-a.strava.com/tiles/all/hot/{Z}/{X}/{Y}.png</code>
