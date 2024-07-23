@@ -18,6 +18,11 @@ main {
   overflow-x: auto;
 }
 
+.scrollblock {
+  max-height: 200px;
+  overflow-y: auto;
+}
+
 form {
   margin: 1em auto;
   max-width: 7in;

@@ -52,8 +52,13 @@
       </code>
     </p>
     <p>
-      Later subsections explain how to build the URL template manually and what each parameter means/does.
-      This form can be used to generate the template automatically.
+      This form can be used the generate the URL template based on several input parameters.
+      Later subsections explain what each parameter means &amp; does
+      and how to build the URL template manually.
+      Once you're ready, use the "Copy" button to copy your URL template into your clipboard
+      for use in CalTopo.
+      The map below the form shows a preview of the heatmap layer on top of an
+      <a href="https://www.openstreetmap.org/">OpenStreetMap</a> base.
     </p>
     <form>
       <label for="activities">Activities</label>
@@ -137,11 +142,11 @@
     <div id="map"></div>
     <h3>Changing the activities</h3>
     <p>
-      By replacing the <code>all</code> part of the URL template shown above,
+      By replacing the URL path part after <code>tiles</code>,
       you can limit the set of activities that are considered when building the heatmap.
       The following activity options can be used:
     </p>
-    <ul>
+    <ul class="scrollblock">
       <li><code>all</code>: all activities</li>
       <li>
         <code>run</code>:
@@ -207,8 +212,8 @@
     </ul>
     <h3>Changing the color</h3>
     <p>
+      The next URL path part describes the color style to use.
       Strava heatmap comes in 6 different color styles.
-      Replace the <code>hot</code> part of the URL template to change styles.
     <ul>
       <li><code>mobileblue</code></li>
       <li><code>gray</code></li>
@@ -218,26 +223,9 @@
       <li><code>orange</code></li>
     </ul>
     </p>
-    <h3>Putting it all together</h3>
-    <p>
-      Let's say you want an orange heatmap of just "Trail Run" activities. You would use the following URL template.
-    </p>
-    <p class="blockquote">
-      <code>
-        https://heatmap-external-a.strava.com/tiles/sport_TrailRun/orange/{Z}/{X}/{Y}.png
-      </code>
-    </p>
-    <p>
-      If you want a purple heatmap of the water sports, use:
-    </p>
-    <p class="blockquote">
-      <code>
-        https://heatmap-external-a.strava.com/tiles/water/purple/{Z}/{X}/{Y}.png
-      </code>
-    </p>
     <h3>Getting a better resolution heatmap with a Strava paid account</h3>
     <p>
-      Without a paid account, Strava only allows the heatmap to be used up to zoom level 11.
+      Without a paid account, Strava only offers a heatmap that can be used up to zoom level 11.
       If you don't have a Strava pro account, then the layer you will get at the end of this guide
       will disappear from your CalTopo map whenever you zoom in beyond level 11
       (about the level that makes the city of Seattle fill a computer screen).
@@ -250,9 +238,9 @@
       If you use Firefox, Safari, or something else, you may have to make some adjustments,
       but the basic process is the same.
     </p>
-    </p>
     <ol>
-      <li>In your URL template, change <code>tiles</code> to <code>tiles-auth</code>.</li>
+      <li>If you are building a URL template by hand instead of using the form above,
+        in your URL template, change <code>tiles</code> to <code>tiles-auth</code>.</li>
       <li>Go to <a href="https://www.strava.com/maps">strava.com/maps</a>.</li>
       <li>Open your browser's developer tools (such as by hitting your F12 key).</li>
       <li>
@@ -265,7 +253,7 @@
         <a href="img/cookies.png" target="_blank"><img src="img/cookies.png" /></a>
       </li>
       <li>
-        Append the following to your URL template:
+        If building a URL template by hand: append the following to your URL template:
         <p class="blockquote">
           <code>
             ?Key-Pair-Id=...&Policy=...&Signature=...
@@ -273,13 +261,15 @@
         </p>
       </li>
       <li>
-        Replace the first <code>...</code> above with the value of the <code>CloudFront-Key-Pair-Id</code> cookie.
+        Copy the value of the <code>CloudFront-Key-Pair-Id</code> cookie.
         You can copy this value by clicking on the table row corresponding to the cookie and
         selecting the text in the "Cookie Value" pane below the table.
         <a href="img/cookievalue.png" target="_blank"><img src="img/cookievalue.png" /></a>
       </li>
-      <li>Replace the second <code>...</code> with the value of the <code>CloudFront-Policy</code> cookie.</li>
-      <li>Replace the third <code>...</code> with the value of the <code>CloudFront-Signature</code> cookie.</li>
+      <li>Paste this value into the form above (field "Key-Pair-Id") or in place of the first <code>...</code> above
+      </li>
+      <li>Do the same with the value of the <code>CloudFront-Policy</code> cookie.</li>
+      <li>Do the same with the value of the <code>CloudFront-Signature</code> cookie.</li>
     </ol>
     <p>
       <em>
@@ -311,13 +301,14 @@
       I chose a purple heatmap of water sport activities.
       In Seattle, this means that the entire West (Puget Sound) coast of the city
       as well as Lakes Washington, Sammamish, Union and Green Lake are covered.
-      Particular hot spots show up around downtown Kirkland, Marymoor Park, Golden Gardens, and other popular locations.
+      Particular hot spots show up around downtown Kirkland, Marymoor Park, Golden Gardens, and other popular locations
+      for water sports.
     </p>
     <a href="img/map.png" target="_blank"><img src="img/map.png" /></a>
   </main>
   <footer>
     <p>
-      Text &copy; 2024 Tyler Jaszkowiak
+      Text and interactive form &copy; 2024 Tyler Jaszkowiak
     </p>
   </footer>
 </body>
