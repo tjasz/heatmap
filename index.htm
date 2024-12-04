@@ -298,6 +298,8 @@
       Ideally, the "Max Zoom" for the unpaid heat map should be set to 11,
       but the CalTopo UI does not allow it to be set lower than 12.
       As a result, the unpaid heat map will disappear if you zoom in beyond level 11.
+      See the section <a href="#userlayer-request">'Setting a "Max Zoom" level not supported by the UI'</a>
+      for complicated instructions to overcome this limitation.
     </p>
     <h3>Overlay?</h3>
     <p>
@@ -316,6 +318,25 @@
       for water sports.
     </p>
     <a href="img/map.png" target="_blank"><img src="img/map.png" /></a>
+    <h2 id="userlayer-request">Setting a "Max Zoom" level not supported by the UI</h2>
+    <ol>
+      <li>Fill out the "Custom Source" form</li>
+      <li>Open your browser dev tools (such as by pressing F12)</li>
+      <li>Navigate to the dev tools' "Network" tab</li>
+      <li>Click "Save to Account" in the "Custom Source" form</li>
+      <li>In the dev tools, find the "User Layer" request and copy it as a PowerShell command</li>
+      <a href="img/userlayer-request.png" target="_blank"><img src="img/userlayer-request.png" /></a>
+      <li>Paste the command into a text editor</li>
+      <li>In the command, replace the "12" (if you submitted the form with "Max Zoom" set to 12) that follows
+        <code>maxzoom%2522%253A%2522</code> with an "11".
+      </li>
+      <li>
+        You can find the "Title" in the request body, too, and replace it with something distinct
+        if you want to be able to identify it as different from the layer you just saved to your account.
+      </li>
+      <li>Paste the command into PowerShell and execute it</li>
+      <li>Refresh your CalTopo page to discover the updated or new layer in your account</li>
+    </ol>
   </main>
   <footer>
     <p>
