@@ -318,7 +318,7 @@
       for water sports.
     </p>
     <a href="img/map.png" target="_blank"><img src="img/map.png" /></a>
-    <h2 id="userlayer-request">Setting a "Max Zoom" level not supported by the UI</h2>
+    <h2 id="userlayer-request">Advanced: Setting a "Max Zoom" level not supported by the UI</h2>
     <ol>
       <li>Fill out the "Custom Source" form</li>
       <li>Open your browser dev tools (such as by pressing F12)</li>
@@ -337,6 +337,24 @@
       <li>Paste the command into PowerShell and execute it</li>
       <li>Refresh your CalTopo page to discover the updated or new layer in your account</li>
     </ol>
+    <h2>Bonus: NOAA Snow Depth Layer</h2>
+    <p>
+      The NOAA NOHRSC Snow Depth map can also be added as a custom overlay.
+      Use the type "WMS" and the following URL Template:
+    </p>
+    <p class="blockquote">
+      <code>
+        https://mapservices.weather.noaa.gov/raster/rest/services/snow/NOHRSC_Snow_Analysis/MapServer/export?dpi=96&transparent=true&format=png32&bbox={left},{bottom},{right},{top}&bboxSR=EPSG:4269&imageSR=102100&size={tilesize},{tilesize}&f=image&layers=show:3
+      </code>
+    </p>
+    <p>
+      The legend for the layer is found on
+      <a href="https://mapservices.weather.noaa.gov/raster/rest/services/snow/NOHRSC_Snow_Analysis/MapServer/legend">
+        this page
+      </a>
+      under "Image (3)". Units are in inches.
+    </p>
+    <a href="img/snowdepth.png" target="_blank"><img src="img/snowdepth.png" /></a>
   </main>
   <footer>
     <p>
