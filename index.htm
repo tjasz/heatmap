@@ -288,14 +288,18 @@
       Give the layer a name to identify it in the "Name" field.
       Paste your URL template into the box labeled "URL Template".
     </p>
+    <h3>Max Zoom</h3>
     <p>
-      Set "Max Zoom" to 15.
-      Ideally, the "Max Zoom" for the unpaid heat map should be set to 11,
-      but CalTopo does not allow it to be set this low.
-      As a result, the unpaid heat map will disappear if you zoom in beyond level 11.
-      The paid heatmap will still show up beyond level 15,
+      For the paid high-resolution heat map with all the CloudFront cookies, set "Max Zoom" to 15.
+      The heatmap will still show up beyond zoom level 15,
       but the resolution will not improve after that level.
     </p>
+    <p>
+      Ideally, the "Max Zoom" for the unpaid heat map should be set to 11,
+      but the CalTopo UI does not allow it to be set lower than 12.
+      As a result, the unpaid heat map will disappear if you zoom in beyond level 11.
+    </p>
+    <h3>Overlay?</h3>
     <p>
       Set "Overlay?" based on whether you want to define an overlay or a base layer.
       I prefer to define a base layer so that I can adjust its transparency to any value.
