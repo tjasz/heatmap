@@ -143,6 +143,10 @@
       <label for="signature">Signature</label>
       <textarea type="text" id="signature" name="signature"
         onChange="setCookieAndUpdateUrlTemplate('signature', 7)"></textarea>
+      <br />
+      <label for="strava-idcf">Strava IDCF</label>
+      <input type="text" id="strava-idcf" name="strava-idcf" onChange="setCookieAndUpdateUrlTemplate('strava-idcf', 7)"
+        size="25" />
     </form>
     <p class="blockquote">
       <code id="urltemplate">https://heatmap-external-a.strava.com/tiles/all/hot/{Z}/{X}/{Y}.png</code>
@@ -258,14 +262,15 @@
       </li>
       <li>From here, under "Storage", find the "Cookies" for "https://www.strava.com".</li>
       <li>
-        The cookies we are interested in are the three whose names start with "CloudFront":
+        The cookies we are interested in are the three whose names start with "CloudFront" and the cookie named
+        "_strava_idcf":
         <a href="img/cookies.png" target="_blank"><img src="img/cookies.png" /></a>
       </li>
       <li>
         If building a URL template by hand: append the following to your URL template:
         <p class="blockquote">
           <code>
-            ?Key-Pair-Id=...&Policy=...&Signature=...
+            ?Key-Pair-Id=...&Policy=...&Signature=...&_strava_idcf=...
           </code>
         </p>
       </li>
@@ -279,11 +284,12 @@
       </li>
       <li>Do the same with the value of the <code>CloudFront-Policy</code> cookie.</li>
       <li>Do the same with the value of the <code>CloudFront-Signature</code> cookie.</li>
+      <li>Finally, do the same with the value of the <code>_strava_idcf</code> cookie.</li>
     </ol>
     <p>
       <em>
-        Note: your <code>CloudFront-Signature</code> changes weekly, so you will have to repeat the last step
-        if your map stops working.
+        Note: your <code>CloudFront-Signature</code> changes weekly, and your <code>_strava_idcf</code> cookie may also
+        expire, so you will have to update these values if your map stops working.
       </em>
     </p>
     <h2>Defining the layer in CalTopo</h2>
