@@ -17,6 +17,15 @@
     <h1>Using Strava heatmap in CalTopo</h1>
   </header>
   <main>
+    <p style="color: red;">
+      <strong>
+        As of 2025-Jun-10, Strava has changed the way they authenticate requests for the heatmap tiles.
+        The new server setup requires sending cookies in the request header, as discussed
+        <a href="https://github.com/zekefarwell/josm-strava-heatmap/issues/19">here</a>.
+        It is no longer possible to use the higher resolution heatmap tiles in CalTopo.
+        The instructions for the unauthenticated lower resolution heatmap tiles still work.
+      </strong>
+    </p>
     <h2>Introduction</h2>
     <p>
       The strava heatmap is an excellent tool for planning routes both in the city and the woods.
