@@ -22,7 +22,7 @@ function updateMap() {
   const policy = document.getElementById("policy").value.trim();
   const signature = document.getElementById("signature").value.trim();
   if (keyPairId?.length && policy?.length && signature?.length) {
-    window["heatmap"] = L.tileLayer(`https://heatmap-external-a.strava.com/tiles-auth/{activities}/{color}/{z}/{x}/{y}.png?Key-Pair-Id=${keyPairId}&Policy=${policy}&Signature=${signature}`, {
+    window["heatmap"] = L.tileLayer(`https://content-a.strava.com/identified/globalheat/{activities}/{color}/{z}/{x}/{y}.png?v=19&t=1749597887362&Key-Pair-Id=${keyPairId}&Policy=${policy}&Signature=${signature}`, {
       activities,
       color,
       maxNativeZoom: 15,
@@ -58,7 +58,7 @@ function updateUrlTemplate() {
   const policy = document.getElementById("policy").value.trim();
   const signature = document.getElementById("signature").value.trim();
   if (keyPairId?.length && policy?.length && signature?.length) {
-    urlTemplateBlock.textContent = `https://heatmap-external-a.strava.com/tiles-auth/${activities}/${color}/{Z}/{X}/{Y}.png?Key-Pair-Id=${keyPairId}&Policy=${policy}&Signature=${signature}`;
+    urlTemplateBlock.textContent = `https://content-a.strava.com/identified/globalheat/${activities}/${color}/{Z}/{X}/{Y}.png?v=19&t=1749597887362&Key-Pair-Id=${keyPairId}&Policy=${policy}&Signature=${signature}`;
   }
 }
 
