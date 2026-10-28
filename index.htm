@@ -106,7 +106,7 @@
       a CalTopo Pro account, and a Strava account.
       It does not support drawing lines based on the Strava heat.
     </p>
-    <h2>Building the URL Template</h2>
+    <h3>Building the URL Template</h3>
     <p>
       The main component of a custom layer source in CalTopo is the URL template.
       The template describes the URL that CalTopo will use to request map tiles from the Strava server
@@ -217,7 +217,7 @@
       <button onClick="copyUrlTemplate()">Copy</button>
     </p>
     <div id="map"></div>
-    <h3>Changing the activities</h3>
+    <h4>Changing the activities</h4>
     <p>
       By replacing the URL path part after <code>tiles</code>,
       you can limit the set of activities that are considered when building the heatmap.
@@ -293,7 +293,7 @@
       <li><code>sport_Volleyball</code></li>
       <li><code>sport_Wheelchair</code></li>
     </ul>
-    <h3>Changing the color</h3>
+    <h4>Changing the color</h4>
     <p>
       The next URL path part describes the color style to use.
       Strava heatmap comes in 6 different color styles.
@@ -306,7 +306,7 @@
       <li><code>orange</code></li>
     </ul>
     </p>
-    <h3>Getting a better resolution heatmap with a Strava paid account</h3>
+    <h4>Getting a better resolution heatmap with a Strava paid account</h4>
     <p>
       Without a paid account, Strava only offers a heatmap that can be used up to zoom level 11.
       If you don't have a Strava pro account, then the layer you will get at the end of this guide
@@ -362,7 +362,7 @@
         expire, so you will have to update these values if your map stops working.
       </em>
     </p>
-    <h2>Defining the layer in CalTopo</h2>
+    <h3>Defining the layer in CalTopo</h3>
     <p>
       Now that you have your URL template, you can define the layer in CalTopo.
       From the "Add" menu, select "Custom Source".
@@ -373,7 +373,7 @@
       Give the layer a name to identify it in the "Name" field.
       Paste your URL template into the box labeled "URL Template".
     </p>
-    <h3>Max Zoom</h3>
+    <h4>Max Zoom</h4>
     <p>
       For the paid high-resolution heat map with all the CloudFront cookies, set "Max Zoom" to 15.
       The heatmap will still show up beyond zoom level 15,
@@ -386,7 +386,7 @@
       See the section <a href="#userlayer-request">'Setting a "Max Zoom" level not supported by the UI'</a>
       for complicated instructions to overcome this limitation.
     </p>
-    <h3>Overlay?</h3>
+    <h4>Overlay?</h4>
     <p>
       Set "Overlay?" based on whether you want to define an overlay or a base layer.
       I prefer to define a base layer so that I can adjust its transparency to any value.
@@ -403,7 +403,7 @@
       for water sports.
     </p>
     <a href="img/map.png" target="_blank"><img src="img/map.png" /></a>
-    <h2 id="userlayer-request">Advanced: Setting a "Max Zoom" level not supported by the UI</h2>
+    <h3 id="userlayer-request">Advanced: Setting a "Max Zoom" level not supported by the UI</h3>
     <ol>
       <li>Fill out the "Custom Source" form</li>
       <li>Open your browser dev tools (such as by pressing F12)</li>
@@ -422,7 +422,7 @@
       <li>Paste the command into PowerShell and execute it</li>
       <li>Refresh your CalTopo page to discover the updated or new layer in your account</li>
     </ol>
-    <h2>Bonus: NOAA Snow Depth Layer</h2>
+    <h3>Bonus: NOAA Snow Depth Layer</h3>
     <p>
       The NOAA NOHRSC Snow Depth map can also be added as a custom overlay.
       Use the type "WMS" and the following URL Template:
