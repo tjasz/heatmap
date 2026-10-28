@@ -28,6 +28,10 @@
       on the other hand allow you to layer many different maps from many different sources.
       From this guide, you can learn various methods for showing the Strava heatmap in CalTopo.
     </p>
+    <a href="img/tahoma.png" target="_blank"><img src="img/tahoma.png" /></a>
+    <p class="caption">
+      The strava heatmap for on-foot activities overlaid on top of CalTopo's MapBuilder map.
+    </p>
     <p>
       Prior to <a href="https://github.com/zekefarwell/josm-strava-heatmap/issues/19">March 2025</a>,
       sending authentication tokens to strava in query parameters was supported by their API,
@@ -80,18 +84,27 @@
       </tbody>
     </table>
     <h2 id="extension">Browser Extension</h2>
+    <p>
+      This is the simplest method, as well as the only one that supports drawing lines based on the Strava heat
+      and the only one that does not require a CalTopo Pro account.
+      Its main drawback is that it does not support including the Strava heatmap layer in a PDF exported/printed from CalTopo.
+      A Strava account is required.
+    </p>
     <h2 id="unauthenticated">Unauthenticated Layer</h2>
+    <p>
+      This is the simplest method that supports exporting/printing the Strava heatmap layers in a PDF,
+      as well as the only method that does not require a Strava account.
+      Its principle downside is that it only support low-resolution tiles down to zoom level 11.
+      It does not support drawing lines based on the Strava heat.
+      A CalTopo pro account is required to define custom layers.
+    </p>
     <h2 id="proxy">Proxy Server</h2>
     <p>
-      <em>
-        Note: adding custom layer sources is now a Pro feature of CalTopo,
-        so you will need a paid account.
-        You will also get better maps with a paid Strava account, but you can get some heatmaps without one.
-      </em>
-    </p>
-    <a href="img/tahoma.png" target="_blank"><img src="img/tahoma.png" /></a>
-    <p class="caption">
-      The strava heatmap for on-foot activities overlaid on top of CalTopo's MapBuilder map.
+      This is the most complicated method.
+      It can give you high-resolution tiles that can be included in a printed PDF.
+      The main downside is that it requires a significant amount of software engineering,
+      a CalTopo Pro account, and a Strava account.
+      It does not support drawing lines based on the Strava heat.
     </p>
     <h2>Building the URL Template</h2>
     <p>
