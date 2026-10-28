@@ -65,3 +65,25 @@ textarea {
   margin: 1em auto;
   height: 400px;
 }
+
+table {
+  text-align: left;
+  border-spacing: 0;
+}
+
+td, th {
+  padding-right: 1em;
+}
+
+th {
+  border-bottom: 2px solid black;
+}
+
+td {
+  border-bottom: 1px solid grey;
+}
+
+a {
+  color: #44c;
+  text-decoration: none;
+}
