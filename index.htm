@@ -98,13 +98,9 @@
       It does not support drawing lines based on the Strava heat.
       A CalTopo pro account is required to define custom layers.
     </p>
-    <h2 id="proxy">Proxy Server</h2>
     <p>
-      This is the most complicated method.
-      It can give you high-resolution tiles that can be included in a printed PDF.
-      The main downside is that it requires a significant amount of software engineering,
-      a CalTopo Pro account, and a Strava account.
-      It does not support drawing lines based on the Strava heat.
+      In this method, you define a custom layer in CalTopo
+      that points to Strava's unauthenticated API for low-resolution heatmap tiles.
     </p>
     <h3>Building the URL Template</h3>
     <p>
@@ -120,10 +116,10 @@
     </p>
     <p>
       This form can be used the generate the URL template based on several input parameters.
-      Later subsections explain what each parameter means &amp; does
-      and how to build the URL template manually.
       Once you're ready, use the "Copy" button to copy your URL template into your clipboard
       for use in CalTopo.
+      Later subsections explain what each parameter means &amp; does
+      and how to build the URL template manually.
       The map below the form shows a preview of the heatmap layer on top of an
       <a href="https://www.openstreetmap.org/">OpenStreetMap</a> base.
     </p>
@@ -196,21 +192,6 @@
         <option value="purple">purple</option>
         <option value="orange">orange</option>
       </select>
-      <br />
-      <label for="key-pair-id">Key-Pair-Id</label>
-      <input type="text" id="key-pair-id" name="key-pair-id" onChange="setCookieAndUpdateUrlTemplate('key-pair-id', 7)"
-        size="25" />
-      <br />
-      <label for="policy">Policy</label>
-      <textarea type="text" id="policy" name="policy" onChange="setCookieAndUpdateUrlTemplate('policy', 7)"></textarea>
-      <br />
-      <label for="signature">Signature</label>
-      <textarea type="text" id="signature" name="signature"
-        onChange="setCookieAndUpdateUrlTemplate('signature', 7)"></textarea>
-      <br />
-      <label for="strava-idcf">Strava IDCF</label>
-      <input type="text" id="strava-idcf" name="strava-idcf" onChange="setCookieAndUpdateUrlTemplate('strava-idcf', 7)"
-        size="25" />
     </form>
     <p class="blockquote">
       <code id="urltemplate">https://heatmap-external-a.strava.com/tiles/all/hot/{Z}/{X}/{Y}.png</code>
@@ -306,6 +287,74 @@
       <li><code>orange</code></li>
     </ul>
     </p>
+    <h3>Defining the layer in CalTopo</h3>
+    <p>
+      Now that you have your URL template, you can define the layer in CalTopo.
+      From the "Add" menu, select "Custom Source".
+    </p>
+    <a href="img/customsource.png" target="_blank"><img src="img/customsource.png" /></a>
+    <p>
+      In the form dialog that pops up, leave the "Type" as "Tile".
+      Give the layer a name to identify it in the "Name" field.
+      Paste your URL template into the box labeled "URL Template".
+    </p>
+    <h4>Max Zoom</h4>
+    <p>
+      For the paid high-resolution heat map with all the CloudFront cookies, set "Max Zoom" to 15.
+      The heatmap will still show up beyond zoom level 15,
+      but the resolution will not improve after that level.
+    </p>
+    <p>
+      Ideally, the "Max Zoom" for the unpaid heat map should be set to 11,
+      but the CalTopo UI does not allow it to be set lower than 12.
+      As a result, the unpaid heat map will disappear if you zoom in beyond level 11.
+      See the section <a href="#userlayer-request">'Setting a "Max Zoom" level not supported by the UI'</a>
+      for complicated instructions to overcome this limitation.
+    </p>
+    <h4>Overlay?</h4>
+    <p>
+      Set "Overlay?" based on whether you want to define an overlay or a base layer.
+      I prefer to define a base layer so that I can adjust its transparency to any value.
+      If you'd rather have the transparency locked in but be able to easily toggle the layer with a checkbox, choose
+      "Yes".
+    </p>
+    <a href="img/dialog.png" target="_blank"><img src="img/dialog.png" /></a>
+    <p>
+      The right half of the form can be left blank. Click "Save". Your layer will be added to your map.
+      I chose a purple heatmap of water sport activities.
+      In Seattle, this means that the entire West (Puget Sound) coast of the city
+      as well as Lakes Washington, Sammamish, Union and Green Lake are covered.
+      Particular hot spots show up around downtown Kirkland, Marymoor Park, Golden Gardens, and other popular locations
+      for water sports.
+    </p>
+    <a href="img/map.png" target="_blank"><img src="img/map.png" /></a>
+    <h4 id="userlayer-request">Advanced: Setting a "Max Zoom" level not supported by the UI</h4>
+    <ol>
+      <li>Fill out the "Custom Source" form</li>
+      <li>Open your browser dev tools (such as by pressing F12)</li>
+      <li>Navigate to the dev tools' "Network" tab</li>
+      <li>Click "Save to Account" in the "Custom Source" form</li>
+      <li>In the dev tools, find the "User Layer" request and copy it as a PowerShell command</li>
+      <a href="img/userlayer-request.png" target="_blank"><img src="img/userlayer-request.png" /></a>
+      <li>Paste the command into a text editor</li>
+      <li>In the command, replace the "12" (if you submitted the form with "Max Zoom" set to 12) that follows
+        <code>maxzoom%2522%253A%2522</code> with an "11".
+      </li>
+      <li>
+        You can find the "Title" in the request body, too, and replace it with something distinct
+        if you want to be able to identify it as different from the layer you just saved to your account.
+      </li>
+      <li>Paste the command into PowerShell and execute it</li>
+      <li>Refresh your CalTopo page to discover the updated or new layer in your account</li>
+    </ol>
+    <h2 id="proxy">Proxy Server</h2>
+    <p>
+      This is the most complicated method.
+      It can give you high-resolution tiles that can be included in a printed PDF.
+      The main downside is that it requires a significant amount of software engineering,
+      a CalTopo Pro account, and a Strava account.
+      It does not support drawing lines based on the Strava heat.
+    </p>
     <h4>Getting a better resolution heatmap with a Strava paid account</h4>
     <p>
       Without a paid account, Strava only offers a heatmap that can be used up to zoom level 11.
@@ -362,67 +411,7 @@
         expire, so you will have to update these values if your map stops working.
       </em>
     </p>
-    <h3>Defining the layer in CalTopo</h3>
-    <p>
-      Now that you have your URL template, you can define the layer in CalTopo.
-      From the "Add" menu, select "Custom Source".
-    </p>
-    <a href="img/customsource.png" target="_blank"><img src="img/customsource.png" /></a>
-    <p>
-      In the form dialog that pops up, leave the "Type" as "Tile".
-      Give the layer a name to identify it in the "Name" field.
-      Paste your URL template into the box labeled "URL Template".
-    </p>
-    <h4>Max Zoom</h4>
-    <p>
-      For the paid high-resolution heat map with all the CloudFront cookies, set "Max Zoom" to 15.
-      The heatmap will still show up beyond zoom level 15,
-      but the resolution will not improve after that level.
-    </p>
-    <p>
-      Ideally, the "Max Zoom" for the unpaid heat map should be set to 11,
-      but the CalTopo UI does not allow it to be set lower than 12.
-      As a result, the unpaid heat map will disappear if you zoom in beyond level 11.
-      See the section <a href="#userlayer-request">'Setting a "Max Zoom" level not supported by the UI'</a>
-      for complicated instructions to overcome this limitation.
-    </p>
-    <h4>Overlay?</h4>
-    <p>
-      Set "Overlay?" based on whether you want to define an overlay or a base layer.
-      I prefer to define a base layer so that I can adjust its transparency to any value.
-      If you'd rather have the transparency locked in but be able to easily toggle the layer with a checkbox, choose
-      "Yes".
-    </p>
-    <a href="img/dialog.png" target="_blank"><img src="img/dialog.png" /></a>
-    <p>
-      The right half of the form can be left blank. Click "Save". Your layer will be added to your map.
-      I chose a purple heatmap of water sport activities.
-      In Seattle, this means that the entire West (Puget Sound) coast of the city
-      as well as Lakes Washington, Sammamish, Union and Green Lake are covered.
-      Particular hot spots show up around downtown Kirkland, Marymoor Park, Golden Gardens, and other popular locations
-      for water sports.
-    </p>
-    <a href="img/map.png" target="_blank"><img src="img/map.png" /></a>
-    <h3 id="userlayer-request">Advanced: Setting a "Max Zoom" level not supported by the UI</h3>
-    <ol>
-      <li>Fill out the "Custom Source" form</li>
-      <li>Open your browser dev tools (such as by pressing F12)</li>
-      <li>Navigate to the dev tools' "Network" tab</li>
-      <li>Click "Save to Account" in the "Custom Source" form</li>
-      <li>In the dev tools, find the "User Layer" request and copy it as a PowerShell command</li>
-      <a href="img/userlayer-request.png" target="_blank"><img src="img/userlayer-request.png" /></a>
-      <li>Paste the command into a text editor</li>
-      <li>In the command, replace the "12" (if you submitted the form with "Max Zoom" set to 12) that follows
-        <code>maxzoom%2522%253A%2522</code> with an "11".
-      </li>
-      <li>
-        You can find the "Title" in the request body, too, and replace it with something distinct
-        if you want to be able to identify it as different from the layer you just saved to your account.
-      </li>
-      <li>Paste the command into PowerShell and execute it</li>
-      <li>Refresh your CalTopo page to discover the updated or new layer in your account</li>
-    </ol>
-    <h3>Bonus: NOAA Snow Depth Layer</h3>
+    <h2>Bonus: NOAA Snow Depth Layer</h2>
     <p>
       The NOAA NOHRSC Snow Depth map can also be added as a custom overlay.
       Use the type "WMS" and the following URL Template:
