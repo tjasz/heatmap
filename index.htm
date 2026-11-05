@@ -67,20 +67,133 @@
       the heatmap can only be laid over a handful of Mapbox map layers.
       Tools like <a href="https://caltopo.com/map.html" target="_blank">CalTopo</a>,
       on the other hand allow you to layer many different maps from many different sources.
-      In this guide, you will learn how to add a custom layer to CalTopo to show the strava heatmap.
-    </p>
-    <p>
-      <em>
-        Note: adding custom layer sources is now a Pro feature of CalTopo,
-        so you will need a paid account.
-        You will also get better maps with a paid Strava account, but you can get some heatmaps without one.
-      </em>
+      From this guide, you can learn various methods for showing the Strava heatmap in CalTopo.
     </p>
     <a href="img/tahoma.png" target="_blank"><img src="img/tahoma.png" /></a>
     <p class="caption">
       The strava heatmap for on-foot activities overlaid on top of CalTopo's MapBuilder map.
     </p>
-    <h2>Building the URL Template</h2>
+    <p>
+      Prior to <a href="https://github.com/zekefarwell/josm-strava-heatmap/issues/19">March 2025</a>,
+      sending authentication tokens to strava in query parameters was supported by their API,
+      so it was possible build a URL to define a custom layer in CalTopo.
+      Now, cookies must be used for authentication, which CalTopo does not forward.
+      Instead of one unified method, this guide now discusses three alternate approaches,
+      each with their own advantages and drawbacks.
+      The methods in this guide are summarized in the table below.
+    </p>
+    <table>
+      <thead>
+        <tr>
+          <th>Approach</th>
+          <th><a href="#extension">Browser Extension</a></th>
+          <th><a href="#unauthenticated">Unauthenticated Layer</a></th>
+          <th><a href="#proxy">Proxy Server</a></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th title="Relative complexity of the approach.">Complexity</th>
+          <td>Low</td>
+          <td>Medium</td>
+          <td>High</td>
+        </tr>
+        <tr>
+          <th title="Highest zoom level of the tiles available via the approach.">Max Zoom Level</th>
+          <td>15</td>
+          <td>11</td>
+          <td>15</td>
+        </tr>
+        <tr>
+          <th title="Whether the approach requires a Pro account on CalTopo.">CalTopo Pro</th>
+          <td></td>
+          <td>Required</td>
+          <td>Required</td>
+        </tr>
+        <tr>
+          <th title="Whether the approach requires a free Strava account.">Strava Account (Free)</th>
+          <td>Required</td>
+          <td></td>
+          <td>Required</td>
+        </tr>
+        <tr>
+          <th title="Whether the approach provides help to draw lines that follow the heatmap paths.">Drawing</th>
+          <td>Supported</td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <th title="Whether the approach allows the heatmap layers to be printed/exported to PDF from CalTopo.">Printing</th>
+          <td></td>
+          <td>Supported</td>
+          <td>Supported</td>
+        </tr>
+        <tr>
+          <th title="Whether the approach allows the heatmap layers to be shown in the CalTopo mobile app.">Mobile</th>
+          <td></td>
+          <td>Supported</td>
+          <td>Supported</td>
+        </tr>
+        <tr>
+          <th title="How authentication cookies are managed in the approach.">Cookie Management</th>
+          <td>Automatic</td>
+          <td>None</td>
+          <td>Manual</td>
+        </tr>
+      </tbody>
+    </table>
+    <h2 id="extension">Browser Extension</h2>
+    <p>
+      This is the simplest method, as well as the only one that will help you draw lines based on the Strava heat
+      and the only one that does not require a CalTopo Pro account.
+      Its main drawback is that it does not support including the Strava heatmap layer in a PDF exported/printed from CalTopo
+      or displaying the heatmap in the CalTopo mobile app.
+      A free Strava account is required.
+    </p>
+    <p>
+      In this method, you install the Strava Heatmap for CalTopo browser extension
+      and let it do all the work of retrieving your strava cookies and displaying
+      the heatmap layer on your CalTopo map!
+      The extension is available via:
+    </p>
+    <ul>
+      <li>
+        <a href="https://chromewebstore.google.com/detail/strava-heatmap-for-caltop/onkfebhamefccjmidebejlgngenfeoai" target="_blank">
+          Chrome Web Store
+        </a>
+        (works for Edge as well)
+      </li>
+      <li>
+        <a href="https://addons.mozilla.org/en-US/firefox/addon/strava-heatmap-for-caltopo/" target="_blank">
+          Firefox Browser Add-Ons Store
+        </a>
+      </li>
+    </ul>
+    <p>
+      See the
+      <a href="https://github.com/tjasz/strava-heatmap-extension/blob/caltopo/doc/userguides/caltopo.md" target="_blank">
+        User Guide
+      </a>
+      for a complete run-through of its features.
+    </p>
+    <a href="img/drawing.png" target="_blank"><img src="img/drawing.png" /></a>
+    <p class="caption">
+      The Strava Heatmap for Caltopo browser extension supports tracing lines from the heatmap.
+    </p>
+    <h2 id="unauthenticated">Unauthenticated Layer</h2>
+    <p>
+      This is the simplest method that supports exporting/printing the Strava heatmap layers in a PDF
+      or viewing the heatmap layers in the mobile app,
+      as well as the only method that does not require a Strava account.
+      Its principle downside is that it only support low-resolution tiles down to zoom level 11.
+      It does not support drawing lines based on the Strava heat.
+      A CalTopo pro account is required to define custom layers.
+    </p>
+    <p>
+      In this method, you define a custom layer in CalTopo
+      that points to Strava's unauthenticated API for low-resolution heatmap tiles.
+    </p>
+    <h3>Building the URL Template</h3>
     <p>
       The main component of a custom layer source in CalTopo is the URL template.
       The template describes the URL that CalTopo will use to request map tiles from the Strava server
@@ -94,10 +207,10 @@
     </p>
     <p>
       This form can be used the generate the URL template based on several input parameters.
-      Later subsections explain what each parameter means &amp; does
-      and how to build the URL template manually.
       Once you're ready, use the "Copy" button to copy your URL template into your clipboard
       for use in CalTopo.
+      Later subsections explain what each parameter means &amp; does
+      and how to build the URL template manually.
       The map below the form shows a preview of the heatmap layer on top of an
       <a href="https://www.openstreetmap.org/">OpenStreetMap</a> base.
     </p>
@@ -170,28 +283,13 @@
         <option value="purple">purple</option>
         <option value="orange">orange</option>
       </select>
-      <br />
-      <label for="key-pair-id">Key-Pair-Id</label>
-      <input type="text" id="key-pair-id" name="key-pair-id" onChange="setCookieAndUpdateUrlTemplate('key-pair-id', 7)"
-        size="25" />
-      <br />
-      <label for="policy">Policy</label>
-      <textarea type="text" id="policy" name="policy" onChange="setCookieAndUpdateUrlTemplate('policy', 7)"></textarea>
-      <br />
-      <label for="signature">Signature</label>
-      <textarea type="text" id="signature" name="signature"
-        onChange="setCookieAndUpdateUrlTemplate('signature', 7)"></textarea>
-      <br />
-      <label for="strava-idcf">Strava IDCF</label>
-      <input type="text" id="strava-idcf" name="strava-idcf" onChange="setCookieAndUpdateUrlTemplate('strava-idcf', 7)"
-        size="25" />
     </form>
     <p class="blockquote">
       <code id="urltemplate">https://heatmap-external-a.strava.com/tiles/all/hot/{Z}/{X}/{Y}.png</code>
       <button onClick="copyUrlTemplate()">Copy</button>
     </p>
     <div id="map"></div>
-    <h3>Changing the activities</h3>
+    <h4>Changing the activities</h4>
     <p>
       By replacing the URL path part after <code>tiles</code>,
       you can limit the set of activities that are considered when building the heatmap.
@@ -267,7 +365,7 @@
       <li><code>sport_Volleyball</code></li>
       <li><code>sport_Wheelchair</code></li>
     </ul>
-    <h3>Changing the color</h3>
+    <h4>Changing the color</h4>
     <p>
       The next URL path part describes the color style to use.
       Strava heatmap comes in 6 different color styles.
@@ -280,94 +378,62 @@
       <li><code>orange</code></li>
     </ul>
     </p>
-    <h3>Getting a better resolution heatmap with a Strava paid account</h3>
-    <p>
-      Without a paid account, Strava only offers a heatmap that can be used up to zoom level 11.
-      If you don't have a Strava pro account, then the layer you will get at the end of this guide
-      will disappear from your CalTopo map whenever you zoom in beyond level 11
-      (about the level that makes the city of Seattle fill a computer screen).
-      If you do have a pro account, follow the instructions below to configure a better resolution heatmap
-      that you can use down to level 15 (about the level that makes Green Lake fill a computer screen).
-    </p>
-    <p>
-      Warning: things are about to get complicated.
-      The instructions below are written for Google Chrome, and probably translate well to Microsoft Edge.
-      If you use Firefox, Safari, or something else, you may have to make some adjustments,
-      but the basic process is the same.
-    </p>
-    <ol>
-      <li>If you are building a URL template by hand instead of using the form above,
-        in your URL template, change <code>tiles</code> to <code>tiles-auth</code>.</li>
-      <li>Go to <a href="https://www.strava.com/maps">strava.com/maps</a>.</li>
-      <li>Open your browser's developer tools (such as by hitting your F12 key).</li>
-      <li>
-        Navigate to the "Application" tab (it might be hidden under a "More" arrow).
-        <a href="img/devtools.png" target="_blank"><img src="img/devtools.png" /></a>
-      </li>
-      <li>From here, under "Storage", find the "Cookies" for "https://www.strava.com".</li>
-      <li>
-        The cookies we are interested in are the three whose names start with "CloudFront" and the cookie named
-        "_strava_idcf":
-        <a href="img/cookies.png" target="_blank"><img src="img/cookies.png" /></a>
-      </li>
-      <li>
-        If building a URL template by hand: append the following to your URL template:
-        <p class="blockquote">
-          <code>
-            ?Key-Pair-Id=...&Policy=...&Signature=...&_strava_idcf=...
-          </code>
-        </p>
-      </li>
-      <li>
-        Copy the value of the <code>CloudFront-Key-Pair-Id</code> cookie.
-        You can copy this value by clicking on the table row corresponding to the cookie and
-        selecting the text in the "Cookie Value" pane below the table.
-        <a href="img/cookievalue.png" target="_blank"><img src="img/cookievalue.png" /></a>
-      </li>
-      <li>Paste this value into the form above (field "Key-Pair-Id") or in place of the first <code>...</code> above
-      </li>
-      <li>Do the same with the value of the <code>CloudFront-Policy</code> cookie.</li>
-      <li>Do the same with the value of the <code>CloudFront-Signature</code> cookie.</li>
-      <li>Finally, do the same with the value of the <code>_strava_idcf</code> cookie.</li>
-    </ol>
-    <p>
-      <em>
-        Note: your <code>CloudFront-Signature</code> changes weekly, and your <code>_strava_idcf</code> cookie may also
-        expire, so you will have to update these values if your map stops working.
-      </em>
-    </p>
-    <h2>Defining the layer in CalTopo</h2>
+    <h3>Defining the layer in CalTopo</h3>
     <p>
       Now that you have your URL template, you can define the layer in CalTopo.
       From the "Add" menu, select "Custom Source".
     </p>
     <a href="img/customsource.png" target="_blank"><img src="img/customsource.png" /></a>
+    <p class="caption">
+      The location of the Custom Source option under the Add menu.
+    </p>
     <p>
       In the form dialog that pops up, leave the "Type" as "Tile".
       Give the layer a name to identify it in the "Name" field.
       Paste your URL template into the box labeled "URL Template".
     </p>
-    <h3>Max Zoom</h3>
-    <p>
-      For the paid high-resolution heat map with all the CloudFront cookies, set "Max Zoom" to 15.
-      The heatmap will still show up beyond zoom level 15,
-      but the resolution will not improve after that level.
+    <a href="img/dialog.png" target="_blank"><img src="img/dialog.png" /></a>
+    <p class="caption">
+      The Custom Source definition dialog.
     </p>
+    <h4>Max Zoom</h4>
     <p>
-      Ideally, the "Max Zoom" for the unpaid heat map should be set to 11,
+      Ideally, the "Max Zoom" for the unauthenticated heat map should be set to 11,
       but the CalTopo UI does not allow it to be set lower than 12.
       As a result, the unpaid heat map will disappear if you zoom in beyond level 11.
-      See the section <a href="#userlayer-request">'Setting a "Max Zoom" level not supported by the UI'</a>
+      See the following section <a href="#userlayer-request">'Setting a "Max Zoom" level not supported by the UI'</a>
       for complicated instructions to overcome this limitation.
     </p>
-    <h3>Overlay?</h3>
+    <h5 id="userlayer-request">Advanced: Setting a "Max Zoom" level not supported by the UI</h5>
+    <ol>
+      <li>Fill out the "Custom Source" form</li>
+      <li>Open your browser dev tools (such as by pressing F12)</li>
+      <li>Navigate to the dev tools' "Network" tab</li>
+      <li>Click "Save to Account" in the "Custom Source" form</li>
+      <li>In the dev tools, find the "UserLayer" request and copy it as a PowerShell command (or your chosen shell)</li>
+      <a href="img/userlayer-request.png" target="_blank"><img src="img/userlayer-request.png" /></a>
+    <p class="caption">
+      Using browser developer tools to find a <code>UserLayer</code> request.
+    </p>
+      <li>Paste the command into a text editor</li>
+      <li>In the command, replace the "12" (if you submitted the form with "Max Zoom" set to 12) that follows
+        <code>maxzoom%2522%253A%2522</code> with an "11".
+      </li>
+      <li>
+        You can find the "Title" in the request body, too, and replace it with something distinct
+        if you want to be able to identify it as different from the layer you just saved to your account.
+      </li>
+      <li>Paste the command into PowerShell (or your chosen shell) and execute it</li>
+      <li>Refresh your CalTopo page to discover the updated or new layer in your account</li>
+    </ol>
+    <h4>Overlay?</h4>
     <p>
       Set "Overlay?" based on whether you want to define an overlay or a base layer.
       I prefer to define a base layer so that I can adjust its transparency to any value.
       If you'd rather have the transparency locked in but be able to easily toggle the layer with a checkbox, choose
       "Yes".
     </p>
-    <a href="img/dialog.png" target="_blank"><img src="img/dialog.png" /></a>
+    <h4>Finishing Up</h4>
     <p>
       The right half of the form can be left blank. Click "Save". Your layer will be added to your map.
       I chose a purple heatmap of water sport activities.
@@ -377,25 +443,86 @@
       for water sports.
     </p>
     <a href="img/map.png" target="_blank"><img src="img/map.png" /></a>
-    <h2 id="userlayer-request">Advanced: Setting a "Max Zoom" level not supported by the UI</h2>
+    <p class="caption">
+      The purple all water sports layer overlayed on the Seattle metro area.
+    </p>
+    <h2 id="proxy">Proxy Server</h2>
+    <p>
+      This is the most complicated method.
+      It can give you high-resolution tiles that can be included in a printed PDF or displayed on the mobile app.
+      The main downside is that it requires a significant amount of software engineering,
+      a CalTopo Pro account, and a Strava account.
+      It does not support drawing lines based on the Strava heat.
+    </p>
+    <p>
+      Without an account, Strava only offers a heatmap that can be used up to zoom level 11.
+      If you do have an account, follow the instructions below to configure a better resolution heatmap
+      that you can use down to level 15 (about the level that makes Green Lake in Seattle fill a laptop screen).
+    </p>
+    <p>
+      In this method, you would set up a proxy server that can attach your strava auth cookies
+      and make requests to Strava using them, and then forward the result back to the requester
+      (in this case, CalTopo's layer server).
+      I have not tried this myself, but here are some things that would be helpful to know
+      if you were going to.
+    </p>
+    <p>
+      These GitHub code repositories claim to implement such a proxy server and may work out-of-the-box or give you a head start on your own implementation:
+      <ul>
+        <li><a href="https://github.com/erik/strava-heatmap-proxy" target="_blank">erik/strava-heatmap-proxy</a></li>
+        <li><a href="https://github.com/patrickziegler/strava-heatmap-proxy" target="_blank">patrickziegler/strava-heatmap-proxy</a></li>
+      </ul>
+    </p>
+    <h4>Authenticated API Base URL</h4>
+    <p>
+      The base URL for the authenticated endpoint is:
+    </p>
+    <p class="blockquote">
+      <code>
+        https://content-a.strava.com/identified/globalheat/{activity}/{color}/{Z}/{X}/{Y}.png
+      </code>
+    </p>
+    <h4>Getting your Strava cookies</h4>
+    <p>
+      The instructions below are written for Google Chrome, and probably translate well to Microsoft Edge.
+      If you use Firefox, Safari, or something else, you may have to make some adjustments,
+      but the basic process is the same.
+    </p>
     <ol>
-      <li>Fill out the "Custom Source" form</li>
-      <li>Open your browser dev tools (such as by pressing F12)</li>
-      <li>Navigate to the dev tools' "Network" tab</li>
-      <li>Click "Save to Account" in the "Custom Source" form</li>
-      <li>In the dev tools, find the "User Layer" request and copy it as a PowerShell command</li>
-      <a href="img/userlayer-request.png" target="_blank"><img src="img/userlayer-request.png" /></a>
-      <li>Paste the command into a text editor</li>
-      <li>In the command, replace the "12" (if you submitted the form with "Max Zoom" set to 12) that follows
-        <code>maxzoom%2522%253A%2522</code> with an "11".
-      </li>
+      <li>Go to <a href="https://www.strava.com/maps">strava.com/maps</a>.</li>
+      <li>Open your browser's developer tools (such as by hitting your F12 key).</li>
       <li>
-        You can find the "Title" in the request body, too, and replace it with something distinct
-        if you want to be able to identify it as different from the layer you just saved to your account.
+        Navigate to the "Application" tab (it might be hidden under a "More" arrow).
+        <a href="img/devtools.png" target="_blank"><img src="img/devtools.png" /></a>
+        <p class="caption">
+          Using browser dev tools.
+        </p>
       </li>
-      <li>Paste the command into PowerShell and execute it</li>
-      <li>Refresh your CalTopo page to discover the updated or new layer in your account</li>
+      <li>From here, under "Storage", find the "Cookies" for "https://www.strava.com".</li>
+      <li>
+        The cookies that you would need to send in your tile requests are the three whose names start with "CloudFront" and the cookie named
+        "_strava_idcf":
+        <a href="img/cookies.png" target="_blank"><img src="img/cookies.png" /></a>
+        <p class="caption">
+          Using browser dev tools to find your strava auth cookies.
+        </p>
+      </li>
     </ol>
+    <p>
+      <em>
+        Note: your <code>CloudFront-Signature</code> changes weekly, and your <code>_strava_idcf</code> cookie may also
+        expire, so you will have to update these values if your map stops working.
+      </em>
+    </p>
+    <h4>Grayscale Tiles</h4>
+    <p>
+      In October 2026, Strava began using a "grayscale" color path parameter in their frontend.
+      Their UI applies different color styles to these before showing them on the map.
+      If Strava eventually retires the individual color path parameters in favor of the "grayscale" one,
+      your proxy server would have to apply styles before forwarding the result to CalTopo.
+      See <a href="https://github.com/julcnx/strava-heatmap-extension/issues/41" target="_blank">this issue</a>
+      for more details.
+    </p>
     <h2>Bonus: NOAA Snow Depth Layer</h2>
     <p>
       The NOAA NOHRSC Snow Depth map can also be added as a custom overlay.
@@ -414,10 +541,13 @@
       under "Image (3)". Units are in inches.
     </p>
     <a href="img/snowdepth.png" target="_blank"><img src="img/snowdepth.png" /></a>
+    <p class="caption">
+      The NOAA Snow Depth layer overlayed on Mount Rainier National Park (captured during Winter).
+    </p>
   </main>
   <footer>
     <p>
-      Text and interactive form &copy; 2024 Tyler Jaszkowiak
+      Text and interactive form &copy; 2024-2026 Tyler Jaszkowiak
     </p>
   </footer>
 </body>

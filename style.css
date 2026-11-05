@@ -37,7 +37,7 @@ img {
 
 .caption {
   max-width: 6in;
-  margin: 0 auto;
+  margin: 0.25em auto;
   text-align: center;
   font-style: italic;
 }
@@ -64,4 +64,43 @@ textarea {
   max-width: 6in;
   margin: 1em auto;
   height: 400px;
+}
+
+table {
+  text-align: left;
+  border-spacing: 0;
+}
+
+thead > tr {
+  background-color: #d0d0d0;
+}
+
+tbody > tr:nth-child(even) {
+  background-color: #e0e0e0;
+}
+
+th[title] {
+  cursor: help;
+  text-decoration: underline dotted #44c;
+}
+
+td, th {
+  padding: 0.25em 0.5em;
+}
+
+thead th {
+  border-bottom: 2px solid black;
+}
+
+td, th {
+  border: 1px solid grey;
+}
+
+a {
+  color: #44c;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #22a;
 }
